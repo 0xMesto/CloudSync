@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CloudSync - Simplifying Cloud Solutions</title>
+    
+    <!-- Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <!-- Orbitron Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- AOS Library for scroll animations -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+    
+    <style>
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes twinkle { 0% { opacity: 0.7; } 50% { opacity: 0.9; } 100% { opacity: 0.7; } }
+        @keyframes aurora { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
+        @keyframes orbit { 0% { transform: rotate(0deg) translateX(50px) rotate(0deg); } 100% { transform: rotate(360deg) translateX(50px) rotate(-360deg); } }
+        @keyframes orbit {from { transform: rotate(0deg); }to { transform: rotate(360deg); }}
+        .cosmic-bg { background: linear-gradient(to bottom, #191970, #000000); }
+        .glass-card { background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); }
+        .stars { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; background-image: radial-gradient(2px 2px at 20px 30px, #eee, rgba(0,0,0,0)), radial-gradient(2px 2px at 40px 70px, #fff, rgba(0,0,0,0)), radial-gradient(2px 2px at 50px 160px, #ddd, rgba(0,0,0,0)), radial-gradient(2px 2px at 90px 40px, #fff, rgba(0,0,0,0)), radial-gradient(2px 2px at 130px 80px, #fff, rgba(0,0,0,0)); background-repeat: repeat; background-size: 200px 200px; animation: twinkle 5s infinite; }
+        .aurora { position: absolute; top: 0; left: 0; right: 0; height: 50px; background: linear-gradient(to right, #00ff00, #00ffff, #ff00ff); opacity: 0.3; filter: blur(30px); animation: aurora 20s linear infinite; }
+        .timeline-container { position: relative; }
+        .timeline-container::before { content: ''; position: absolute; top: 0; left: 50%; width: 2px; height: 100%; background: linear-gradient(to bottom, transparent, #00f7ff, transparent); transform: translateX(-50%); }
+        .timeline-item { position: relative; margin-bottom: 50px; }
+        .timeline-item::before { content: ''; position: absolute; left: 50%; top: 50%; width: 20px; height: 20px; background-color: #00f7ff; border-radius: 50%; transform: translate(-50%, -50%); }
+        .timeline-content { width: 45%; }
+        .timeline-item:nth-child(odd) .timeline-content { margin-left: auto; }
+        .cosmic-separator { height: 2px; background: linear-gradient(to right, transparent, #00f7ff, transparent); margin: 40px 0; }
+        .testimonial-card { background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border-radius: 10px; padding: 20px; margin: 10px; transition: all 0.3s ease; }
+        .testimonial-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0, 230, 255, 0.2); }
+        .testimonial-icon { font-size: 24px; margin-bottom: 10px; }
+        .swiper-pagination-bullet { background: #00f7ff; }
+        .pricing-card { transition: all 0.3s ease; }
+        .pricing-card:hover { transform: translateY(-10px) scale(1.05); }
+        .pricing-icon { font-size: 48px; margin-bottom: 20px; }
+        .price-tag { font-size: 36px; font-weight: bold; margin: 20px 0; }
+        .feature-list li { margin-bottom: 10px; }
+        .planet { width: 100px; height: 100px; border-radius: 50%; position: absolute; }
+        .planet-1 { background: radial-gradient(circle at 30% 30%, #FFB6C1, #FF69B4); top: 10%; left: 5%; animation: orbit 20s linear infinite; }
+        .planet-2 { background: radial-gradient(circle at 30% 30%, #87CEFA, #1E90FF); bottom: 15%; right: 10%; animation: orbit 25s linear infinite reverse; }
+        .integration-card {
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(20px);
+            margin-bottom: 2rem;
+        }
+        .integration-card.aos-animate {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .integration-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+            transform: rotate(45deg);
+            transition: all 0.3s ease;
+        }
+        .integration-card:hover::before {
+            top: -75%;
+            left: -75%;
+        }
+        .integration-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 230, 255, 0.2);
+        }
+        .integration-icon {
+            transition: all 0.3s ease;
+        }
+        .integration-card:hover .integration-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: grid;
+        }
+        .tab-btn {
+            opacity: 0.7;
+            transition: all 0.3s ease;
+        }
+        .tab-btn.active {
+            opacity: 1;
+            box-shadow: 0 0 15px rgba(0, 230, 255, 0.5);
+        }
+    </style>
+</head>
+<body class="font-['Orbitron'] cosmic-bg text-white min-h-screen flex flex-col">
+    <%- include('../components/header') %>
+
+    <main class="flex-1 relative overflow-hidden">
+        <div class="stars"></div>
+        <div class="aurora"></div>
+
+        <!-- Hero Section -->
+        <section class="relative min-h-screen flex items-center justify-center py-20">
+            <div class="container mx-auto px-4 z-10">
+                <div class="text-center">
+                    <h1 class="text-5xl md:text-7xl font-bold mb-6 animate-pulse">
+                        Welcome to CloudSync
+                    </h1>
+                    <p class="text-xl md:text-2xl mb-12" data-aos="fade-up" data-aos-duration="500">
+                        Revolutionizing Cloud Solutions for the Digital Age
+                    </p>
+                    <a href="#why-choose" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-8 rounded-full text-lg transition duration-300 transform hover:scale-105" data-aos="fade-up" data-aos-duration="500" data-aos-delay="200">
+                        Discover Why
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Cosmic Separator -->
+        <div class="cosmic-separator"></div>
+
+        <!-- Why Choose CloudSync Section -->
+        <section id="why-choose" class="relative py-20">
+            <div class="container mx-auto px-4 relative z-10">
+                <h2 class="text-4xl md:text-5xl font-bold text-center mb-16 animate-pulse">
+                    Why Choose CloudSync?
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div class="glass-card rounded-lg p-8 transform hover:scale-105 transition duration-300 flex flex-col items-center text-center" data-aos="fade-up" data-aos-duration="500">
+                        <div class="bg-blue-500 rounded-full p-4 mb-6">
+                            <i class="fas fa-rocket text-4xl text-white"></i>
+                        </div>
+                        <h3 class="text-2xl font-semibold mb-4">Rapid Deployment</h3>
+                        <p class="text-gray-300">Launch your cloud infrastructure in minutes, not days. Our streamlined process gets you up and running faster than ever.</p>
+                    </div>
+                    <div class="glass-card rounded-lg p-8 transform hover:scale-105 transition duration-300 flex flex-col items-center text-center" data-aos="fade-up" data-aos-duration="500" data-aos-delay="100">
+                        <div class="bg-green-500 rounded-full p-4 mb-6">
+                            <i class="fas fa-shield-alt text-4xl text-white"></i>
+                        </div>
+                        <h3 class="text-2xl font-semibold mb-4">Advanced Security</h3>
+                        <p class="text-gray-300">Enterprise-grade security measures protect your data. Rest easy knowing your information is safe with state-of-the-art encryption.</p>
+                    </div>
+                    <div class="glass-card rounded-lg p-8 transform hover:scale-105 transition duration-300 flex flex-col items-center text-center" data-aos="fade-up" data-aos-duration="500" data-aos-delay="200">
+                        <div class="bg-purple-500 rounded-full p-4 mb-6">
+                            <i class="fas fa-chart-line text-4xl text-white"></i>
+                        </div>
+                        <h3 class="text-2xl font-semibold mb-4">Infinite Scalability</h3>
+                        <p class="text-gray-300">Grow without limits. Our dynamic infrastructure scales seamlessly with your business, ensuring optimal performance at any size.</p>
+                    </div>
+                    <div class="glass-card rounded-lg p-8 transform hover:scale-105 transition duration-300 flex flex-col items-center text-center" data-aos="fade-up" data-aos-duration="500" data-aos-delay="300">
+                        <div class="bg-yellow-500 rounded-full p-4 mb-6">
+                            <i class="fas fa-headset text-4xl text-white"></i>
+                        </div>
+                        <h3 class="text-2xl font-semibold mb-4">24/7 Expert Support</h3>
+                        <p class="text-gray-300">Our dedicated team of cloud experts is always available. Get personalized assistance whenever you need it, day or night.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Cosmic Separator -->
+        <div class="cosmic-separator"></div>
+
+        <!-- How It Works Section -->
+        <section class="relative py-20">
+            <div class="container mx-auto px-4 relative z-10">
+                <h2 class="text-4xl md:text-5xl font-bold text-center mb-16 animate-pulse">
+                    How It Works
+                </h2>
+                <div class="timeline-container">
+                    <div class="timeline-item" data-aos="fade-right" data-aos-duration="500">
+                        <div class="timeline-content glass-card rounded-lg p-6">
+                            <div class="flex items-center mb-4">
+                                <div class="bg-blue-500 rounded-full p-3 mr-4">
+                                    <i class="fas fa-user-plus text-2xl text-white"></i>
+                                </div>
+                                <h3 class="text-2xl font-semibold">Sign Up</h3>
+                            </div>
+                            <p class="text-gray-300">Create your CloudSync account in just a few clicks. Our streamlined process gets you started in no time.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item" data-aos="fade-left" data-aos-duration="500" data-aos-delay="100">
+                        <div class="timeline-content glass-card rounded-lg p-6">
+                            <div class="flex items-center mb-4">
+                                <div class="bg-green-500 rounded-full p-3 mr-4">
+                                    <i class="fas fa-cogs text-2xl text-white"></i>
+                                </div>
+                                <h3 class="text-2xl font-semibold">Configure</h3>
+                            </div>
+                            <p class="text-gray-300">Customize your cloud environment with our intuitive interface. Set up your resources exactly how you need them.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item" data-aos="fade-right" data-aos-duration="500" data-aos-delay="200">
+                        <div class="timeline-content glass-card rounded-lg p-6">
+                            <div class="flex items-center mb-4">
+                                <div class="bg-purple-500 rounded-full p-3 mr-4">
+                                    <i class="fas fa-rocket text-2xl text-white"></i>
+                                </div>
+                                <h3 class="text-2xl font-semibold">Deploy</h3>
+                            </div>
+                            <p class="text-gray-300">Launch your applications and services with a single click. Our automated systems handle the heavy lifting.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item" data-aos="fade-left" data-aos-duration="500" data-aos-delay="300">
+                        <div class="timeline-content glass-card rounded-lg p-6">
+                            <div class="flex items-center mb-4">
+                                <div class="bg-yellow-500 rounded-full p-3 mr-4">
+                                    <i class="fas fa-chart-line text-2xl text-white"></i>
+                                </div>
+                                <h3 class="text-2xl font-semibold">Scale</h3>
+                            </div>
+                            <p class="text-gray-300">Grow your infrastructure effortlessly as your needs evolve. CloudSync adapts to your business's changing demands.</p>
+                        </div>
+                    </div>
+                </div>
+                </div>
+                </section>
+                
+                <!-- Cosmic Separator -->
+                <div class="cosmic-separator"></div>
+                
+                <!-- Testimonials / Social Proof Section -->
+<section class="relative py-20">
+    <div class="container mx-auto px-4 relative z-10">
+        <h2 class="text-4xl md:text-5xl font-bold text-center mb-16 animate-pulse">
+            What Our Clients Say
+        </h2>
+        <div class="swiper-container">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <div class="testimonial-card" data-aos="fade-up">
+                        <i class="fas fa-quote-left text-blue-400 testimonial-icon"></i>
+                        <p class="mb-4">CloudSync has revolutionized our infrastructure. We've never been more efficient!</p>
+                        <div class="flex items-center">
+                            <img src="https://randomuser.me/api/portraits/men/1.jpg" alt="John Doe" class="w-12 h-12 rounded-full mr-4">
+                            <div>
+                                <h4 class="font-semibold">John Doe</h4>
+                                <p class="text-sm text-gray-400">CEO, TechCorp</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="testimonial-card" data-aos="fade-up">
+                        <i class="fas fa-quote-left text-blue-400 testimonial-icon"></i>
+                        <p class="mb-4">The scalability of CloudSync has allowed us to grow without worrying about our IT infrastructure.</p>
+                        <div class="flex items-center">
+                            <img src="https://randomuser.me/api/portraits/women/2.jpg" alt="Jane Smith" class="w-12 h-12 rounded-full mr-4">
+                            <div>
+                                <h4 class="font-semibold">Jane Smith</h4>
+                                <p class="text-sm text-gray-400">CTO, GrowthStartup</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="testimonial-card" data-aos="fade-up">
+                        <i class="fas fa-quote-left text-blue-400 testimonial-icon"></i>
+                        <p class="mb-4">CloudSync's customer support is unparalleled. They're always there when we need them.</p>
+                        <div class="flex items-center">
+                            <img src="https://randomuser.me/api/portraits/men/3.jpg" alt="Mike Johnson" class="w-12 h-12 rounded-full mr-4">
+                            <div>
+                                <h4 class="font-semibold">Mike Johnson</h4>
+                                <p class="text-sm text-gray-400">IT Director, MegaCorp</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="testimonial-card" data-aos="fade-up">
+                        <i class="fas fa-quote-left text-blue-400 testimonial-icon"></i>
+                        <p class="mb-4">We've cut our deployment time in half thanks to CloudSync's intuitive interface.</p>
+                        <div class="flex items-center">
+                            <img src="https://randomuser.me/api/portraits/women/4.jpg" alt="Sarah Lee" class="w-12 h-12 rounded-full mr-4">
+                            <div>
+                                <h4 class="font-semibold">Sarah Lee</h4>
+                                <p class="text-sm text-gray-400">DevOps Lead, InnovateCo</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="testimonial-card" data-aos="fade-up">
+                        <i class="fas fa-quote-left text-blue-400 testimonial-icon"></i>
+                        <p class="mb-4">The security features of CloudSync give us peace of mind in this age of cyber threats.</p>
+                        <div class="flex items-center">
+                            <img src="https://randomuser.me/api/portraits/men/5.jpg" alt="David Chen" class="w-12 h-12 rounded-full mr-4">
+                            <div>
+                                <h4 class="font-semibold">David Chen</h4>
+                                <p class="text-sm text-gray-400">CISO, SecureBank</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="testimonial-card" data-aos="fade-up">
+                        <i class="fas fa-quote-left text-blue-400 testimonial-icon"></i>
+                        <p class="mb-4">CloudSync's analytics tools have given us insights we never knew we needed. Game-changer!</p>
+                        <div class="flex items-center">
+                            <img src="https://randomuser.me/api/portraits/women/6.jpg" alt="Emily Wong" class="w-12 h-12 rounded-full mr-4">
+                            <div>
+                                <h4 class="font-semibold">Emily Wong</h4>
+                                <p class="text-sm text-gray-400">Data Scientist, AnalyticsPro</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="testimonial-card" data-aos="fade-up">
+                        <i class="fas fa-quote-left text-blue-400 testimonial-icon"></i>
+                        <p class="mb-4">As a small business, CloudSync has given us enterprise-level capabilities at a fraction of the cost.</p>
+                        <div class="flex items-center">
+                            <img src="https://randomuser.me/api/portraits/men/7.jpg" alt="Tom Baker" class="w-12 h-12 rounded-full mr-4">
+                            <div>
+                                <h4 class="font-semibold">Tom Baker</h4>
+                                <p class="text-sm text-gray-400">Owner, SmallBizChamp</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
+    </div>
+</section>
+                
+                <!-- Cosmic Separator -->
+                <div class="cosmic-separator"></div>
+                
+                <!-- Integration Section -->
+                <section class="relative py-20 overflow-hidden">
+                    <div class="container mx-auto px-4 relative z-10">
+                        <h2 class="text-4xl md:text-5xl font-bold text-center mb-16 animate-pulse">
+                            Stellar Integrations
+                        </h2>
+                        <div class="integration-tabs mb-8 flex justify-center">
+                            <button class="tab-btn active mx-2 px-4 py-2 rounded-full bg-blue-500 hover:bg-blue-600 transition duration-300" data-tab="dev">Development</button>
+                            <button class="tab-btn mx-2 px-4 py-2 rounded-full bg-purple-500 hover:bg-purple-600 transition duration-300" data-tab="comm">Communication</button>
+                            <button class="tab-btn mx-2 px-4 py-2 rounded-full bg-green-500 hover:bg-green-600 transition duration-300" data-tab="prod">Productivity</button>
+                        </div>
+                        <div class="integration-grid grid grid-cols-1 md:grid-cols-3 gap-8 gap-y-12 tab-content active" id="dev-tab">
+                            <div class="integration-card glass-card rounded-lg p-8 text-center" data-aos="fade-up">
+                                <div class="integration-icon bg-blue-500 rounded-full p-4 mx-auto mb-6 w-20 h-20 flex items-center justify-center">
+                                    <i class="fab fa-github text-4xl text-white"></i>
+                                </div>
+                                <h3 class="text-2xl font-semibold mb-4">GitHub</h3>
+                                <p class="text-gray-300">Seamlessly sync your code repositories and manage version control.</p>
+                            </div>
+                            <div class="integration-card glass-card rounded-lg p-8 text-center" data-aos="fade-up" data-aos-delay="100">
+                                <div class="integration-icon bg-orange-500 rounded-full p-4 mx-auto mb-6 w-20 h-20 flex items-center justify-center">
+                                    <i class="fab fa-gitlab text-4xl text-white"></i>
+                                </div>
+                                <h3 class="text-2xl font-semibold mb-4">GitLab</h3>
+                                <p class="text-gray-300">Manage your entire DevOps lifecycle in one application.</p>
+                            </div>
+                            <div class="integration-card glass-card rounded-lg p-8 text-center" data-aos="fade-up" data-aos-delay="200">
+                                <div class="integration-icon bg-blue-400 rounded-full p-4 mx-auto mb-6 w-20 h-20 flex items-center justify-center">
+                                    <i class="fab fa-bitbucket text-4xl text-white"></i>
+                                </div>
+                                <h3 class="text-2xl font-semibold mb-4">Bitbucket</h3>
+                                <p class="text-gray-300">Collaborate on code and integrate with your favorite tools.</p>
+                            </div>
+                        </div>
+                        <div class="integration-grid grid grid-cols-1 md:grid-cols-3 gap-8 gap-y-12 tab-content hidden" id="comm-tab">
+                            <div class="integration-card glass-card rounded-lg p-8 text-center" data-aos="fade-up">
+                                <div class="integration-icon bg-purple-500 rounded-full p-4 mx-auto mb-6 w-20 h-20 flex items-center justify-center">
+                                    <i class="fab fa-slack text-4xl text-white"></i>
+                                </div>
+                                <h3 class="text-2xl font-semibold mb-4">Slack</h3>
+                                <p class="text-gray-300">Keep your team in the loop with real-time notifications and updates.</p>
+                            </div>
+                            <div class="integration-card glass-card rounded-lg p-8 text-center" data-aos="fade-up" data-aos-delay="100">
+                                <div class="integration-icon bg-blue-600 rounded-full p-4 mx-auto mb-6 w-20 h-20 flex items-center justify-center">
+                                    <i class="fab fa-discord text-4xl text-white"></i>
+                                </div>
+                                <h3 class="text-2xl font-semibold mb-4">Discord</h3>
+                                <p class="text-gray-300">Integrate your development workflow with your community channels.</p>
+                            </div>
+                            <div class="integration-card glass-card rounded-lg p-8 text-center" data-aos="fade-up" data-aos-delay="200">
+                                <div class="integration-icon bg-blue-500 rounded-full p-4 mx-auto mb-6 w-20 h-20 flex items-center justify-center">
+                                    <i class="fab fa-telegram text-4xl text-white"></i>
+                                </div>
+                                <h3 class="text-2xl font-semibold mb-4">Telegram</h3>
+                                <p class="text-gray-300">Send automated updates and alerts to your Telegram channels.</p>
+                            </div>
+                        </div>
+                        <div class="integration-grid grid grid-cols-1 md:grid-cols-3 gap-8 gap-y-12 tab-content hidden" id="prod-tab">
+                            <div class="integration-card glass-card rounded-lg p-8 text-center" data-aos="fade-up">
+                                <div class="integration-icon bg-green-500 rounded-full p-4 mx-auto mb-6 w-20 h-20 flex items-center justify-center">
+                                    <i class="fab fa-jira text-4xl text-white"></i>
+                                </div>
+                                <h3 class="text-2xl font-semibold mb-4">Jira</h3>
+                                <p class="text-gray-300">Streamline your project management and issue tracking workflows.</p>
+                            </div>
+                            <div class="integration-card glass-card rounded-lg p-8 text-center" data-aos="fade-up" data-aos-delay="100">
+                                <div class="integration-icon bg-blue-400 rounded-full p-4 mx-auto mb-6 w-20 h-20 flex items-center justify-center">
+                                    <i class="fab fa-trello text-4xl text-white"></i>
+                                </div>
+                                <h3 class="text-2xl font-semibold mb-4">Trello</h3>
+                                <p class="text-gray-300">Organize your projects with flexible boards, lists, and cards.</p>
+                            </div>
+                            <div class="integration-card glass-card rounded-lg p-8 text-center" data-aos="fade-up" data-aos-delay="200">
+                                <div class="integration-icon bg-red-500 rounded-full p-4 mx-auto mb-6 w-20 h-20 flex items-center justify-center">
+                                    <i class="fab fa-asana text-4xl text-white"></i>
+                                </div>
+                                <h3 class="text-2xl font-semibold mb-4">Asana</h3>
+                                <p class="text-gray-300">Manage your team's work, projects, and tasks in one place.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="text-center mt-12">
+                            <a href="#" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-8 rounded-full text-lg transition duration-300 transform hover:scale-105 inline-block">
+                                Explore All Integrations
+                            </a>
+                        </div>
+                    </div>
+                </section>
+                        <!-- Cosmic Separator -->
+        <div class="cosmic-separator"></div>
+
+        <!-- Pricing Section -->
+        <section class="relative py-20">
+            <div class="container mx-auto px-4 relative z-10">
+                <h2 class="text-4xl md:text-5xl font-bold text-center mb-16 animate-pulse">
+                    Choose Your Cosmic Plan
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="pricing-card glass-card rounded-lg p-8 text-center relative overflow-hidden" data-aos="fade-up" data-aos-duration="500">
+                        <div class="pricing-icon">
+                            <i class="fas fa-meteor text-blue-400"></i>
+                        </div>
+                        <h3 class="text-2xl font-semibold mb-4">Nebula</h3>
+                        <div class="price-tag">$29<span class="text-lg">/mo</span></div>
+                        <ul class="feature-list text-left mb-8">
+                            <li><i class="fas fa-check-circle text-green-400 mr-2"></i> 10GB Cloud Storage</li>
+                            <li><i class="fas fa-check-circle text-green-400 mr-2"></i> 5 Concurrent Projects</li>
+                            <li><i class="fas fa-check-circle text-green-400 mr-2"></i> Basic Support</li>
+                        </ul>
+                        <a href="#" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-6 rounded-full transition duration-300 transform hover:scale-105">
+                            Get Started
+                        </a>
+                    </div>
+                    <div class="pricing-card glass-card rounded-lg p-8 text-center relative overflow-hidden" data-aos="fade-up" data-aos-duration="500" data-aos-delay="100">
+                        <div class="pricing-icon">
+                            <i class="fas fa-galaxy text-purple-400"></i>
+                        </div>
+                        <h3 class="text-2xl font-semibold mb-4">Galaxy</h3>
+                        <div class="price-tag">$79<span class="text-lg">/mo</span></div>
+                        <ul class="feature-list text-left mb-8">
+                            <li><i class="fas fa-check-circle text-green-400 mr-2"></i> 50GB Cloud Storage</li>
+                            <li><i class="fas fa-check-circle text-green-400 mr-2"></i> 15 Concurrent Projects</li>
+                            <li><i class="fas fa-check-circle text-green-400 mr-2"></i> Priority Support</li>
+                            <li><i class="fas fa-check-circle text-green-400 mr-2"></i> Advanced Analytics</li>
+                        </ul>
+                        <a href="#" class="bg-purple-500 hover:bg-purple-600 text-white font-bold py-2 px-6 rounded-full transition duration-300 transform hover:scale-105">
+                            Upgrade Now
+                        </a>
+                    </div>
+                    <div class="pricing-card glass-card rounded-lg p-8 text-center relative overflow-hidden" data-aos="fade-up" data-aos-duration="500" data-aos-delay="200">
+                        <div class="pricing-icon">
+                            <i class="fas fa-universe text-yellow-400"></i>
+                        </div>
+                        <h3 class="text-2xl font-semibold mb-4">Universe</h3>
+                        <div class="price-tag">$149<span class="text-lg">/mo</span></div>
+                        <ul class="feature-list text-left mb-8">
+                            <li><i class="fas fa-check-circle text-green-400 mr-2"></i> Unlimited Cloud Storage</li>
+                            <li><i class="fas fa-check-circle text-green-400 mr-2"></i> Unlimited Projects</li>
+                            <li><i class="fas fa-check-circle text-green-400 mr-2"></i> 24/7 Premium Support</li>
+                            <li><i class="fas fa-check-circle text-green-400 mr-2"></i> Custom Integrations</li>
+                            <li><i class="fas fa-check-circle text-green-400 mr-2"></i> AI-Powered Insights</li>
+                        </ul>
+                        <a href="#" class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-6 rounded-full transition duration-300 transform hover:scale-105">
+                            Go Unlimited
+                        </a>
+                    </div>
+                </div>
+                <div class="planet planet-1"></div>
+                <div class="planet planet-2"></div>
+            </div>
+        </section>
+        <!-- Cosmic Separator -->
+<div class="cosmic-separator"></div>
+
+<!-- Call to Action Section -->
+<section class="relative py-20 overflow-hidden">
+    <div class="container mx-auto px-4 relative z-10">
+        <div class="glass-card rounded-lg p-12 text-center relative overflow-hidden" data-aos="zoom-in" data-aos-duration="800">
+            <div class="absolute inset-0 bg-gradient-to-br from-blue-500 to-purple-600 opacity-30"></div>
+            <h2 class="text-4xl md:text-5xl font-bold mb-6 relative z-10 animate-pulse">
+                Ready to Explore the CloudSync Universe?
+            </h2>
+            <p class="text-xl mb-8 relative z-10">
+                Join thousands of businesses revolutionizing their cloud infrastructure today.
+            </p>
+            <div class="flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-6">
+                <a href="#" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-8 rounded-full text-lg transition duration-300 transform hover:scale-105 hover:rotate-3 relative z-10">
+                    Start Your Free Trial
+                </a>
+                <a href="#" class="bg-transparent border-2 border-white hover:bg-white hover:text-blue-500 text-white font-bold py-3 px-8 rounded-full text-lg transition duration-300 transform hover:scale-105 hover:rotate-3 relative z-10">
+                    Schedule a Demo
+                </a>
+            </div>
+            <div class="mt-8 text-sm relative z-10">
+                <p>No credit card required. 14-day free trial.</p>
+            </div>
+            <div class="absolute -bottom-16 -left-16 w-64 h-64 bg-blue-400 rounded-full filter blur-3xl opacity-20 animate-pulse"></div>
+            <div class="absolute -top-16 -right-16 w-64 h-64 bg-purple-400 rounded-full filter blur-3xl opacity-20 animate-pulse"></div>
+        </div>
+    </div>
+</section>
+
+    </main>
+
+    <%- include('../components/footer') %>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const stars = document.querySelector('.stars');
+            let lastScrollY = window.scrollY;
+
+            window.addEventListener('scroll', () => {
+                const currentScrollY = window.scrollY;
+                requestAnimationFrame(() => {
+                    stars.style.transform = `translateY(${currentScrollY * 0.5}px)`;
+                });
+            });
+
+            VanillaTilt.init(document.querySelectorAll(".glass-card"), {
+                max: 15,
+                speed: 400,
+                glare: true,
+                "max-glare": 0.3,
+            });
+
+            AOS.init({
+                duration: 800,
+                once: true,
+                offset: 100
+            });
+
+            document.querySelector('a[href="#why-choose"]').addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector('#why-choose').scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+
+            new Swiper('.swiper-container', {
+                slidesPerView: 1,
+                spaceBetween: 30,
+                loop: true,
+                autoplay: {
+                    delay: 5000,
+                    disableOnInteraction: false,
+                },
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true,
+                },
+                breakpoints: {
+                    640: {
+                        slidesPerView: 2,
+                    },
+                    1024: {
+                        slidesPerView: 3,
+                    },
+                }
+            });
+
+            // Add floating animation to pricing cards
+            const pricingCards = document.querySelectorAll('.pricing-card');
+            pricingCards.forEach(card => {
+                card.addEventListener('mousemove', (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    
+                    card.style.setProperty('--mouse-x', `${x}px`);
+                    card.style.setProperty('--mouse-y', `${y}px`);
+                    card.style.setProperty('--rotate-x', `${(y - rect.height / 2) / 10}deg`);
+                    card.style.setProperty('--rotate-y', `${-(x - rect.width / 2) / 10}deg`);
+                });
+                
+                card.addEventListener('mouseleave', () => {
+                    card.style.setProperty('--rotate-x', '0deg');
+                    card.style.setProperty('--rotate-y', '0deg');
+                });
+            });
+
+            // Integration tabs functionality
+            const tabBtns = document.querySelectorAll('.tab-btn');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const tabId = btn.getAttribute('data-tab');
+                    
+                    tabBtns.forEach(b => b.classList.remove('active'));
+                    tabContents.forEach(c => c.classList.remove('active'));
+                    
+                    btn.classList.add('active');
+                    document.getElementById(`${tabId}-tab`).classList.add('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,256 @@
+<header class="relative bg-gradient-to-b from-midnight-blue to-cosmic-black text-white py-4 overflow-hidden">
+  <div class="stars"></div>
+  <div class="aurora"></div>
+  <div class="container mx-auto px-4">
+    <nav class="flex items-center justify-between">
+      <div class="flex items-center space-x-4">
+        <a href="/" class="text-2xl font-bold hover:text-cyan-400 transition-colors duration-300 logo-hover-effect">
+          <span class="sr-only">CloudSync</span>
+          <svg class="w-10 h-10 inline-block" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M20 5C11.7157 5 5 11.7157 5 20C5 28.2843 11.7157 35 20 35C28.2843 35 35 28.2843 35 20C35 11.7157 28.2843 5 20 5ZM20 30C14.4772 30 10 25.5228 10 20C10 14.4772 14.4772 10 20 10C25.5228 10 30 14.4772 30 20C30 25.5228 25.5228 30 20 30Z" fill="currentColor"/>
+            <path d="M20 15C17.2386 15 15 17.2386 15 20C15 22.7614 17.2386 25 20 25C22.7614 25 25 22.7614 25 20C25 17.2386 22.7614 15 20 15Z" fill="currentColor"/>
+          </svg>
+        </a>
+        <p class="hidden md:block typewriter-text font-bold">CloudSync</p>
+      </div>
+      <div class="hidden md:flex space-x-6">
+        <a href="#features" class="nav-link glass-effect px-3 py-2 rounded-lg flex items-center">
+          <i class="fas fa-rocket mr-2"></i>
+          Features
+        </a>
+        <a href="#pricing" class="nav-link glass-effect px-3 py-2 rounded-lg flex items-center">
+          <i class="fas fa-tags mr-2"></i>
+          Pricing
+        </a>
+        <a href="#docs" class="nav-link glass-effect px-3 py-2 rounded-lg flex items-center">
+          <i class="fas fa-book mr-2"></i>
+          Docs
+        </a>
+        <a href="#support" class="nav-link glass-effect px-3 py-2 rounded-lg flex items-center">
+          <i class="fas fa-headset mr-2"></i>
+          Support
+        </a>
+      </div>
+      <div class="flex items-center space-x-4">
+        <button id="searchToggle" class="glass-effect p-2 rounded-full" aria-label="Toggle search">
+          <i class="fas fa-search"></i>
+        </button>
+        <a href="/login" class="glass-effect p-2 rounded-full">Login</a>
+        <a href="/signup" class="bg-cyan-500 hover:bg-cyan-600 text-white font-bold py-2 px-4 rounded-full transition-colors duration-300 transform hover:scale-105">Sign Up</a>
+        <button id="mobileMenuToggle" class="md:hidden glass-effect p-2 rounded-full" aria-label="Toggle menu">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+    </nav>
+  </div>
+  <div id="searchBar" class="hidden absolute w-full bg-midnight-blue py-4 transition-all duration-300 ease-in-out">
+    <div class="container mx-auto px-4">
+      <input type="text" placeholder="Search..." class="w-full bg-cosmic-black text-white rounded-full py-2 px-4 focus:outline-none focus:ring-2 focus:ring-cyan-400">
+    </div>
+  </div>
+  <div id="mobileMenu" class="md:hidden bg-midnight-blue transition-all duration-300 ease-in-out max-h-0 overflow-hidden">
+    <div class="container mx-auto px-4 py-2">
+      <a href="#features" class="block py-2 hover:text-cyan-400 transition-colors duration-300">
+        <i class="fas fa-rocket mr-2"></i>
+        Features
+      </a>
+      <a href="#pricing" class="block py-2 hover:text-cyan-400 transition-colors duration-300">
+        <i class="fas fa-tags mr-2"></i>
+        Pricing
+      </a>
+      <a href="#docs" class="block py-2 hover:text-cyan-400 transition-colors duration-300">
+        <i class="fas fa-book mr-2"></i>
+        Docs
+      </a>
+      <a href="#support" class="block py-2 hover:text-cyan-400 transition-colors duration-300">
+        <i class="fas fa-headset mr-2"></i>
+        Support
+      </a>
+    </div>
+  </div>
+</header>
+
+
+<style>
+  .from-midnight-blue {
+    --tw-gradient-from: #191970;
+  }
+  .to-cosmic-black {
+    --tw-gradient-to: #000000;
+  }
+  .stars {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    background-image: 
+      radial-gradient(2px 2px at 20px 30px, #eee, rgba(0,0,0,0)),
+      radial-gradient(2px 2px at 40px 70px, #fff, rgba(0,0,0,0)),
+      radial-gradient(2px 2px at 50px 160px, #ddd, rgba(0,0,0,0)),
+      radial-gradient(2px 2px at 90px 40px, #fff, rgba(0,0,0,0)),
+      radial-gradient(2px 2px at 130px 80px, #fff, rgba(0,0,0,0));
+    background-repeat: repeat;
+    background-size: 200px 200px;
+    animation: twinkle 5s infinite;
+  }
+  @keyframes twinkle {
+    0% { opacity: 0.7; }
+    50% { opacity: 0.9; }
+    100% { opacity: 0.7; }
+  }
+  .aurora {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 50px;
+    background: linear-gradient(to right, #00ff00, #00ffff, #ff00ff);
+    opacity: 0.3;
+    filter: blur(30px);
+    animation: aurora 20s linear infinite;
+  }
+  @keyframes aurora {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+  }
+  .glass-effect {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+  }
+  .glass-effect:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px) scale(1.05);
+  }
+  .logo-hover-effect:hover svg {
+    animation: pulse 1s infinite;
+  }
+  @keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+  }
+  .nav-link {
+    position: relative;
+    transition: all 0.3s ease;
+  }
+  .nav-link:hover {
+    color: #22d3ee;
+    transform: translateY(-2px);
+  }
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    bottom: -4px;
+    left: 0;
+    background-color: #22d3ee;
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+  }
+  .nav-link:hover::after {
+    transform: scaleX(1);
+  }
+  .typewriter-text {
+    overflow: hidden;
+    border-right: .15em solid #00E6FF;
+    white-space: nowrap;
+    margin: 0 auto;
+    letter-spacing: .15em;
+    animation: 
+      typing 3.5s steps(40, end),
+      blink-caret .75s step-end infinite;
+  }
+  @keyframes typing {
+    from { width: 0 }
+    to { width: 100% }
+  }
+  @keyframes blink-caret {
+    from, to { border-color: transparent }
+    50% { border-color: #00E6FF; }
+  }
+  @keyframes navLinkFade {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  .nav-link {
+    animation: navLinkFade 0.5s ease forwards;
+    animation-delay: calc(0.1s * var(--item-index));
+  }
+  .shooting-star {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100px;
+    height: 2px;
+    background: linear-gradient(to right, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 50%,rgba(255,255,255,0) 100%);
+    animation: shoot 1s ease-out;
+  }
+  @keyframes shoot {
+    from {
+      transform: translateX(-100px) translateY(0) rotate(-45deg);
+    }
+    to {
+      transform: translateX(calc(100vw + 100px)) translateY(calc(100vh + 100px)) rotate(-45deg);
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const searchToggle = document.getElementById('searchToggle');
+    const searchBar = document.getElementById('searchBar');
+    const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+    const mobileMenu = document.getElementById('mobileMenu');
+
+    searchToggle.addEventListener('click', () => {
+      searchBar.classList.toggle('hidden');
+      searchBar.classList.toggle('slide-down');
+    });
+
+    mobileMenuToggle.addEventListener('click', () => {
+      if (mobileMenu.style.maxHeight) {
+        mobileMenu.style.maxHeight = null;
+      } else {
+        mobileMenu.style.maxHeight = mobileMenu.scrollHeight + "px";
+      }
+    });
+
+    const stars = document.querySelector('.stars');
+    let lastScrollY = window.scrollY;
+
+    window.addEventListener('scroll', () => {
+      const currentScrollY = window.scrollY;
+      const delta = lastScrollY - currentScrollY;
+      lastScrollY = currentScrollY;
+
+      requestAnimationFrame(() => {
+        stars.style.transform = `translateY(${currentScrollY * 0.3}px)`;
+        stars.style.opacity = Math.max(0.7 - currentScrollY / 1000, 0);
+      });
+    });
+
+    const logo = document.querySelector('.logo-hover-effect');
+    logo.addEventListener('click', (e) => {
+      e.preventDefault();
+      const shootingStar = document.createElement('div');
+      shootingStar.classList.add('shooting-star');
+      document.querySelector('header').appendChild(shootingStar);
+      setTimeout(() => shootingStar.remove(), 1000);
+    });
+
+    const navLinks = document.querySelectorAll('.nav-link');
+    navLinks.forEach((link, index) => {
+      link.style.setProperty('--item-index', index);
+    });
+  });
+</script>
